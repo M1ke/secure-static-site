@@ -21,10 +21,12 @@ variable "aws_region" {
 # in here; instead set up awscli and configure
 # them with your environment
 provider "aws" {
+  profile = "default"
   region = "${var.aws_region}"
   version = "~> 1.7"
 }
 provider "aws" {
+  profile = "default"
   alias = "aws-us-east-1"
 
   region = "us-east-1"
