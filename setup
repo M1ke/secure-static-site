@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp main.tf.example main.tf
+terraform init

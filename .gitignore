@@ -1,0 +1,6 @@
+*.tfstate*
+.terraform
+*.zip
+main.tf
+*.bak
+.idea

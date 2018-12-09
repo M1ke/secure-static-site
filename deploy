@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bucket_name=$(cat terraform.tfstate | jq '.modules[3].outputs.bucket_name.value' -r)
+aws s3 sync web/ s3://$bucket_name/
