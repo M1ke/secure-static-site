@@ -1,6 +1,6 @@
 # Deploy a Secure Static Site with AWS & Terraform
 
-[Read the full article on AWS Advent]
+[Read the full article](https://m1ke.me/2018/12/deploy-a-secure-static-site-with-aws-terraform/)
 
 **tl;dr**
 
