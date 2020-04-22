@@ -21,49 +21,22 @@ variable "aws_region" {
 # in here; instead set up awscli and configure
 # them with your environment
 provider "aws" {
-  profile = "default"
-  region = "${var.aws_region}"
-  version = "~> 1.7"
+  region = var.aws_region
 }
 provider "aws" {
-  profile = "default"
-  alias = "aws-us-east-1"
+  alias = "us-east-1"
 
   region = "us-east-1"
-  version = "~> 1.7"
 }
 
-module "certs-us-east-1" {
-  source = "modules/acm"
+module "secure-static" {
+  source  = "M1ke/secure-static/aws"
+  version = "0.6.0"
+  domain_website = var.domain_website
+  route53_zone_id = var.route53_zone_id
 
   providers = {
-    aws = "aws.aws-us-east-1"
-  }
-
-  domain_website = "${var.domain_website}"
-  route53_zone_id = "${var.route53_zone_id}"
-}
-
-module "lambda-rewrite" {
-  source = "modules/lambda-rewrite"
-
-  providers = {
-    aws = "aws.aws-us-east-1"
+    aws.main = aws
+    aws.us-east-1 = aws.us-east-1
   }
 }
-
-module "website" {
-  source = "modules/static-website"
-
-  providers = {
-    aws = "aws"
-  }
-
-  domain_website = "${var.domain_website}"
-  route53_zone_id = "${var.route53_zone_id}"
-
-  # Provided by other modules
-  acm_arn = "${module.certs-us-east-1.acm_arn}"
-  lambda_arn = "${module.lambda-rewrite.lambda_arn}"
-}
-
